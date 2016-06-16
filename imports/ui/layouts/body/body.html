@@ -1,0 +1,15 @@
+<template name="body-wrapper">
+    <head>
+        <title>Pomodoro Timer</title>
+    </head>
+
+    <body class="{{this.body_color}}">
+    {{> yield region='nav'}}
+    <main>
+        {{> yield}}
+    </main>
+
+    {{> yield region='footer'}}
+    </body>
+</template>
+

@@ -1,0 +1,41 @@
+<template name="timer">
+    <div class="body-wrapper container center-align">
+        <svg version="1.1" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet"
+             xmlns="http://www.w3.org/2000/svg">
+            <title>Layer 1</title>
+            <circle id="circle" class="circle_animation" cx="250" cy="250" r="200" stroke-width="5" stroke="white"
+                    fill="none">
+            </circle>
+            <!-- Modal Trigger -->
+            <text id="timerText" x="50%" y="-45%" text-anchor="middle" stroke="#ffffff" stroke-width="2px" fill="white"
+                  font-size="100px">{{getRemainingTime}}</text>
+        </svg>
+        <div class="container center-align">
+            <a id="playPauseButton" href="#" class="btn-floating btn-large waves-effect waves-light grey">
+                <i class="material-icons white-text">
+                    {{#if isFinished}}
+                        replay
+                    {{else}}
+                        {{#if isPlaying}}
+                            pause
+                        {{else}}
+                            play_arrow
+                        {{/if}}
+                    {{/if}}
+                </i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="setTimeModal" class="modal">
+        <div class="modal-content row">
+            <h4>Set Time</h4>
+            <button class="btn waves-effect waves-light">^</button>
+            <input id="timer-input-minutes" max="59" min="0" placeholder="Minutes" type="number" class="validate col s5"><div class="col s2 center">:</div> <input id="timer-input-seconds" placeholder="Seconds" max="59" min="0" type="number" class="validate col s5">
+        </div>
+        <div class="modal-footer">
+            <a id="submit-time" class="modal-action modal-close waves-effect waves-green btn-flat">Set Time</a>
+        </div>
+    </div>
+</template>

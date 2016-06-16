@@ -1,0 +1,44 @@
+/*CSS declarations go here*/
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+svg {
+    width: auto;
+    height: 65vh;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+svg text {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.circle_animation {
+    stroke-dasharray: 1256.64; /* this value is the pixel circumference of the circle */
+    stroke-dashoffset: 0;
+    transition: all 1s linear;
+}
+
+#insertTasksForm{
+    padding-bottom: 20px;
+    transition: all 1s linear;
+}
+
+main > .row {
+    margin-top: 40px;
+}
+
+.no-border{
+    border: none;
+}
+
