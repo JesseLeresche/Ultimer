@@ -18,6 +18,12 @@ Template.currentTasks.helpers({
     },
 });
 
+Template.task.events({
+    'click .delete'() {
+        Meteor.call('tasks.remove', this._id);
+    },
+})
+
 Template.insertTasksForm.onCreated(function insertTasksFormCreated(){
     this.state = new ReactiveDict;
     this.state.set('newTaskIcon','add');

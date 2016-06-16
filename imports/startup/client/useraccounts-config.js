@@ -1,9 +1,4 @@
 // configure login templates
-// import { Accounts } from 'meteor/accounts-base';
-//
-// Accounts.ui.config({
-//   passwordSignupFields: 'USERNAME_ONLY',
-// });
 
 AccountsTemplates.configure({
   // defaultLayout: 'emptyLayout',
