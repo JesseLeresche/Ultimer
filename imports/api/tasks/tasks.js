@@ -73,8 +73,11 @@ Tasks.attachSchema(new SimpleSchema({
     },
     createdAt: {
         type: Date,
-        autoValue: new Date()
+        autoValue: function(){
+            return new Date();
+        },
     },
+
 }));
 
 
