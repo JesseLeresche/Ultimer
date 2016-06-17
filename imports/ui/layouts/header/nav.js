@@ -1,5 +1,7 @@
-import './nav.html';
+import "./nav.html";
 
 Template.nav.rendered = function () {
-    $(".button-collapse").sideNav();
+    $(".button-collapse").sideNav({
+        closeOnClick: true,
+    });
 };
