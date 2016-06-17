@@ -1,12 +1,11 @@
 // set up all routes in the app
 
 //Import to load all of the required templates
-import '../../ui/layouts/body/body.js';
-import '../../ui/layouts/timer/timer.js';
-import '../../ui/layouts/tasks/task.js';
-import '../../ui/layouts/shared/404not_found.html';
-
-import '../../ui/stylesheets/main.css';
+import "../../ui/layouts/body/body.js";
+import "../../ui/layouts/timer/timer.js";
+import "../../ui/layouts/tasks/task.js";
+import "../../ui/layouts/shared/404not_found.html";
+import "../../ui/stylesheets/main.css";
 
 //Router Configuration
 Router.configure({
@@ -25,7 +24,7 @@ Router.route('/', {
     name: "timer",
     template:"timer",
     data: {
-        body_color: "cyan"
+        body_color: "white"
     }
 });
 
