@@ -10,6 +10,8 @@ window.Tasks = Tasks;
 
 Template.currentTasks.onCreated(function bodyOnCreated() {
     Meteor.subscribe('tasks');
+    this.state = new ReactiveDict;
+    this.state.set('updateID', null);
 });
 
 Template.currentTasks.helpers({
@@ -22,28 +24,23 @@ Template.task.events({
     'click .delete'() {
         Meteor.call('tasks.remove', this._id);
     },
+    'click .update'(){
+        event.preventDefault();
+        Session.set("updateId", Tasks.findOne(this._id));
+        $('#updateRecordModal').openModal();
+    },
+});
+
+Template.tasksForm.events({
+    'click .btn-floating'(){
+        $('#updateRecordModal').closeModal();
+    }
 })
 
-Template.insertTasksForm.onCreated(function insertTasksFormCreated(){
-    this.state = new ReactiveDict;
-    this.state.set('newTaskIcon','add');
-    this.state.set('newTaskFormClass','hide');
-});
-
-Template.insertTasksForm.events({
-    'click #toggleNewTasks': function (event, instance) {
-        event.preventDefault();
-        instance.state.set('newTaskIcon', instance.state.get('newTaskIcon') == 'add' ? 'clear_all' : 'add');
-        instance.state.set('newTaskFormClass', instance.state.get('newTaskFormClass') == 'hide' ? 'show' : 'hide');
-    },
-});
-
-Template.insertTasksForm.helpers({
-    getNewTaskIcon(){
-        return Template.instance().state.get('newTaskIcon');
-    },
-    getNewTaskFormClass(){
-        return Template.instance().state.get('newTaskFormClass');
+Template.currentTasks.helpers({
+    findDoc() {
+        console.log(Session.get("updateId"));
+        return Session.get("updateId");
     },
 });
 

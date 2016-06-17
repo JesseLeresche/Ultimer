@@ -3,17 +3,17 @@
         <h1 class="center">Manage Tasks</h1>
         <p>Here you can manage your tasks. This includes viewing your current tasks, adding in new tasks, edit current
             ones or deleting old ones.</p>
-        <h2>Current Tasks</h2>
+
         {{> currentTasks}}
-        <h2>Add New Tasks</h2>
-        {{> insertTasksForm}}
+
     </div>
 </template>
 
 <template name="currentTasks">
+    <h2>Current Tasks</h2>
     <div class="">
 
-        <table class="striped">
+        <table class="striped responsive-table">
             <thead>
             <tr>
                 <th data-field="id">Name</th>
@@ -30,56 +30,74 @@
             </tbody>
         </table>
     </div>
+    <h2>Add New Tasks</h2>
+    {{#autoForm collection="Tasks" id="insertTasksForm" type="insert"}}
+        {{> tasksForm}}
+    {{/autoForm}}
+
+
+    <div id="updateRecordModal" class="modal">
+        {{#if findDoc}}
+            <div class="modal-content">
+                <h4>Update Task</h4>
+                {{#autoForm collection="Tasks" id="updateTasksForm" doc=findDoc type="update"}}
+                    {{> tasksForm}}
+                {{/autoForm}}
+            </div>
+        {{/if}}
+    </div>
+
+
 </template>
 
 <template name="task">
-    <tr>
+    <tr class="update">
         <td>{{name}}</td>
         <td>{{type}}</td>
-        <td>{{description}}</td>
-        <td><button class="delete btn waves-effect waves-light"><i class="material-icons">delete</i></button></td>
+        <td class="truncate">{{description}}</td>
+        <td>
+            <button class="delete btn waves-effect waves-light"><i class="material-icons">delete</i></button>
+        </td>
     </tr>
 </template>
 
-<template name="insertTasksForm">
-    {{#autoForm collection="Tasks" id="insertTasksForm" type="insert"}}
-        <fieldset class="no-border">
-            <div class="">
-                <div class="row">
-                    <div class="col s6">
-                        {{> afQuickField name="name"}}
-                    </div>
-                    <div class="col s6">
-                        {{> afQuickField name="type" firstOption="Select a timer type"}}
-                    </div>
+<template name="tasksForm">
+    <fieldset class="no-border">
+        <div class="">
+            <div class="row">
+                <div class="col s6">
+                    {{> afQuickField name="name"}}
                 </div>
-                <div class="row">
-                    {{#if afFieldValueIs name="type" value="COUNTDOWN"}}
-                        <div class="col s2">
-                            {{> afQuickField name="hours"}}
-                        </div>
-                        <div class="col s2">
-                            {{> afQuickField name="minutes"}}
-                        </div>
-                        <div class="col s2">
-                            {{> afQuickField name="seconds"}}
-                        </div>
-                    {{/if}}
-                    {{#if afFieldValueIs name="type" value="POMODORO"}}
-                        <div class="col s4">
-                            {{> afQuickField name="estimatedPomodoros"}}
-                        </div>
-                    {{/if}}
-
-                    <div class="col s6">
-                        {{> afQuickField name="description" type="textarea"}}
-                    </div>
-                    <div class="col s2 valign-wrapper right-align">
-                        <button type="submit" class="btn-floating btn-large waves-effect waves-light valign"><i
-                                class="material-icons">add</i></button>
-                    </div>
+                <div class="col s6">
+                    {{> afQuickField name="type" firstOption="Select a timer type"}}
                 </div>
             </div>
-        </fieldset>
-    {{/autoForm}}
+            <div class="row">
+                {{#if afFieldValueIs name="type" value="COUNTDOWN"}}
+                    <div class="col s2">
+                        {{> afQuickField name="hours"}}
+                    </div>
+                    <div class="col s2">
+                        {{> afQuickField name="minutes"}}
+                    </div>
+                    <div class="col s2">
+                        {{> afQuickField name="seconds"}}
+                    </div>
+                {{/if}}
+                {{#if afFieldValueIs name="type" value="POMODORO"}}
+                    <div class="col s4">
+                        {{> afQuickField name="estimatedPomodoros"}}
+                    </div>
+                {{/if}}
+
+                <div class="col s6">
+                    {{> afQuickField name="description" type="textarea"}}
+                </div>
+                <div class="col s2 valign-wrapper right-align">
+                    <button type="submit" class="btn-floating btn-large waves-effect waves-light valign"><i
+                            class="material-icons">add</i></button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </template>

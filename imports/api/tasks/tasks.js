@@ -9,6 +9,10 @@ Tasks.allow({
         /* Check that the current user is the logged in user*/
         return Meteor.userId() == userId;
     },
+    'update': function (userId) {
+        /* Check that the current user is the logged in user*/
+        return Meteor.userId() == userId;
+    },
 });
 
 
@@ -66,6 +70,10 @@ Tasks.attachSchema(new SimpleSchema({
         autoValue: function () {
             return Meteor.userId();
         },
+    },
+    createdAt: {
+        type: Date,
+        autoValue: new Date()
     },
 }));
 
