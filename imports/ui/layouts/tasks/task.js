@@ -6,6 +6,15 @@ import "./task.html";
 
 window.Tasks = Tasks;
 
+function getTasks(instance){
+    if (instance.state.get('hideCompleted')) {
+        // If hide completed is checked, filter tasks
+        return Tasks.find({ completed: { $ne: true } }, { sort: { createdAt: -1 } });
+    }
+    // Otherwise, return all of the tasks
+    return Tasks.find({}, { sort: { createdAt: -1 } });
+}
+
 Template.currentTasks.onCreated(function bodyOnCreated() {
     Meteor.subscribe('tasks');
     this.state = new ReactiveDict;
@@ -15,12 +24,7 @@ Template.currentTasks.onCreated(function bodyOnCreated() {
 Template.currentTasks.helpers({
     tasks() {
         const instance = Template.instance();
-        if (instance.state.get('hideCompleted')) {
-            // If hide completed is checked, filter tasks
-            return Tasks.find({ completed: { $ne: true } }, { sort: { createdAt: -1 } });
-        }
-        // Otherwise, return all of the tasks
-        return Tasks.find({}, { sort: { createdAt: -1 } });
+        return getTasks(instance);
     },
     findDoc() {
         return Session.get("updateId");
@@ -28,6 +32,10 @@ Template.currentTasks.helpers({
     mode(){
         return Session.get("mode");
     },
+    tasksExist(){
+        const instance = Template.instance();
+        return getTasks(instance).count() > 0;
+    }
 });
 
 Template.currentTasks.events({

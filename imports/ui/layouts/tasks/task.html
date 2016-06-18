@@ -34,26 +34,36 @@
             </label>
         </div>
 
-        <div>
+        {{#if tasksExist}}
+            <div>
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Completed</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
 
-            <table class="striped">
-                <thead>
-                <tr>
-                    <th>Completed</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
+                    <tbody>
+                    {{#each tasks}}
+                        {{> task}}
+                    {{/each}}
 
-                <tbody>
-                {{#each tasks}}
-                    {{> task}}
-                {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        {{else}}
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel cyan">
+                        <span class="white-text">Could not find any tasks. Try adding some tasks by clicking the add button or showing the uncompleted tasks with the switch above</span>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
 
-                </tbody>
-            </table>
-        </div>
     </div>
 
     <div id="updateRecordModal" class="modal">
