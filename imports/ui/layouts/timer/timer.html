@@ -11,7 +11,7 @@
                   font-size="100px">{{getRemainingTime}}</text>
         </svg>
         <div class="container center-align">
-            <a id="playPauseButton" href="#" class="btn-floating btn-large waves-effect waves-light grey">
+            <a id="playPauseButton" href="#" class="btn-floating btn-large waves-effect waves-light">
                 <i class="material-icons white-text">
                     {{#if isFinished}}
                         replay
@@ -38,4 +38,6 @@
             <a id="submit-time" class="modal-action modal-close waves-effect waves-green btn-flat">Set Time</a>
         </div>
     </div>
+
+    {{> currentTasks}}
 </template>

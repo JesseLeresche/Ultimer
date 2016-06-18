@@ -1,7 +1,7 @@
-import { Template } from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict';
-
-import './timer.html';
+import {Template} from "meteor/templating";
+import {ReactiveDict} from "meteor/reactive-dict";
+import "../tasks/task.js";
+import "./timer.html";
 
 var interval;
 const initialOffset = '0';

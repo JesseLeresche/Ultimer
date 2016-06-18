@@ -1,10 +1,8 @@
-import {Meteor} from 'meteor/meteor';
-import {Template} from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict';
-
-import {Tasks} from '../../../api/tasks/tasks.js';
-
-import './task.html';
+import {Meteor} from "meteor/meteor";
+import {Template} from "meteor/templating";
+import {ReactiveDict} from "meteor/reactive-dict";
+import {Tasks} from "../../../api/tasks/tasks.js";
+import "./task.html";
 
 window.Tasks = Tasks;
 
@@ -18,6 +16,21 @@ Template.currentTasks.helpers({
     tasks() {
         return Tasks.find({});
     },
+    findDoc() {
+        console.log(Session.get("updateId"));
+        return Session.get("updateId");
+    },
+    mode(){
+        return Session.get("mode");
+    },
+});
+
+Template.currentTasks.events({
+    'click #addTask'(){
+        Session.set("updateId", null);
+        Session.set("mode", "insert");
+        $('#updateRecordModal').openModal();
+    },
 });
 
 Template.task.events({
@@ -25,9 +38,13 @@ Template.task.events({
         Meteor.call('tasks.remove', this._id);
     },
     'click .update'(){
-        event.preventDefault();
         Session.set("updateId", Tasks.findOne(this._id));
+        Session.set("mode", "update");
         $('#updateRecordModal').openModal();
+    },
+    'click .select'(){
+        event.preventDefault();
+        alert("Add time to Timer");
     },
 });
 
@@ -35,13 +52,6 @@ Template.tasksForm.events({
     'click .btn-floating'(){
         $('#updateRecordModal').closeModal();
     }
-})
-
-Template.currentTasks.helpers({
-    findDoc() {
-        console.log(Session.get("updateId"));
-        return Session.get("updateId");
-    },
 });
 
 Template.manage_tasks.rendered = function insertTasksFormCreated(){

@@ -3,60 +3,78 @@
         <h1 class="center">Manage Tasks</h1>
         <p>Here you can manage your tasks. This includes viewing your current tasks, adding in new tasks, edit current
             ones or deleting old ones.</p>
-
-        {{> currentTasks}}
-
     </div>
+
+    {{> currentTasks}}
 </template>
 
 <template name="currentTasks">
-    <h2>Current Tasks</h2>
-    <div class="">
 
-        <table class="striped responsive-table">
-            <thead>
-            <tr>
-                <th data-field="id">Name</th>
-                <th data-field="name">Type</th>
-                <th data-field="price">Description</th>
-            </tr>
-            </thead>
+    <div class="container">
+        <div class="row valign-wrapper">
+            <div class="col s10">
+                <h2>Current Tasks</h2>
+            </div>
 
-            <tbody>
-            {{#each tasks}}
-                {{> task}}
-            {{/each}}
+            <div class="col s2 valign right-align">
+                <button id="addTask" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
 
-            </tbody>
-        </table>
+        <!-- Disabled Switch -->
+        <div class="switch">
+            <label>
+                Show Completed
+                <input type="checkbox">
+                <span class="lever"></span>
+                Hide Completed
+            </label>
+        </div>
+
+        <div>
+
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th data-field="id">Name</th>
+                    <th data-field="name">Type</th>
+                    <th data-field="price">Description</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {{#each tasks}}
+                    {{> task}}
+                {{/each}}
+
+                </tbody>
+            </table>
+        </div>
     </div>
-    <h2>Add New Tasks</h2>
-    {{#autoForm collection="Tasks" id="insertTasksForm" type="insert"}}
-        {{> tasksForm}}
-    {{/autoForm}}
-
 
     <div id="updateRecordModal" class="modal">
-        {{#if findDoc}}
-            <div class="modal-content">
-                <h4>Update Task</h4>
-                {{#autoForm collection="Tasks" id="updateTasksForm" doc=findDoc type="update"}}
-                    {{> tasksForm}}
-                {{/autoForm}}
-            </div>
-        {{/if}}
+        <div class="modal-content">
+            <h4>Update Task</h4>
+            {{#autoForm collection="Tasks" id="updateTasksForm" doc=findDoc type=mode}}
+                {{> tasksForm}}
+            {{/autoForm}}
+        </div>
     </div>
 
 
 </template>
 
 <template name="task">
-    <tr class="update">
-        <td>{{name}}</td>
-        <td>{{type}}</td>
-        <td class="truncate">{{description}}</td>
+    <tr>
+        <td class="select">{{name}}</td>
+        <td class="select">{{type}}</td>
+        <td class="select">{{description}}</td>
         <td>
             <button class="delete btn waves-effect waves-light"><i class="material-icons">delete</i></button>
+        </td>
+        <td>
+            <button class="update btn waves-effect waves-light"><i class="material-icons">mode_edit</i></button>
         </td>
     </tr>
 </template>
