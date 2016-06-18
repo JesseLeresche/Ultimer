@@ -9,15 +9,20 @@ window.Tasks = Tasks;
 Template.currentTasks.onCreated(function bodyOnCreated() {
     Meteor.subscribe('tasks');
     this.state = new ReactiveDict;
-    this.state.set('updateID', null);
+    this.state.set('hideCompleted', false);
 });
 
 Template.currentTasks.helpers({
     tasks() {
-        return Tasks.find({});
+        const instance = Template.instance();
+        if (instance.state.get('hideCompleted')) {
+            // If hide completed is checked, filter tasks
+            return Tasks.find({ completed: { $ne: true } }, { sort: { createdAt: -1 } });
+        }
+        // Otherwise, return all of the tasks
+        return Tasks.find({}, { sort: { createdAt: -1 } });
     },
     findDoc() {
-        console.log(Session.get("updateId"));
         return Session.get("updateId");
     },
     mode(){
@@ -31,6 +36,9 @@ Template.currentTasks.events({
         Session.set("mode", "insert");
         $('#updateRecordModal').openModal();
     },
+    'change #completedSwitch'(event, instance){
+        instance.state.set('hideCompleted', event.target.checked);
+    }
 });
 
 Template.task.events({
@@ -46,6 +54,9 @@ Template.task.events({
         event.preventDefault();
         alert("Add time to Timer");
     },
+    'click .markCompleted'(event){
+        Meteor.call('tasks.setCompleted', this._id, event.target.checked);
+    }
 });
 
 Template.tasksForm.events({

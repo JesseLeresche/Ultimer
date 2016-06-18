@@ -14,6 +14,8 @@
         <div class="row valign-wrapper">
             <div class="col s10">
                 <h2>Current Tasks</h2>
+
+
             </div>
 
             <div class="col s2 valign right-align">
@@ -26,7 +28,7 @@
         <div class="switch">
             <label>
                 Show Completed
-                <input type="checkbox">
+                <input id="completedSwitch" type="checkbox">
                 <span class="lever"></span>
                 Hide Completed
             </label>
@@ -37,9 +39,10 @@
             <table class="striped">
                 <thead>
                 <tr>
-                    <th data-field="id">Name</th>
-                    <th data-field="name">Type</th>
-                    <th data-field="price">Description</th>
+                    <th>Completed</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
                 </tr>
                 </thead>
 
@@ -67,6 +70,8 @@
 
 <template name="task">
     <tr>
+        <td><input type="checkbox" class="markCompleted" checked="{{completed}}" id="{{_id}}"/>
+            <label for="{{_id}}"></label></td>
         <td class="select">{{name}}</td>
         <td class="select">{{type}}</td>
         <td class="select">{{description}}</td>

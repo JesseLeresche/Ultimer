@@ -1,6 +1,6 @@
 // definition of the Tasks collection
-import {Mongo} from 'meteor/mongo';
-import {check} from 'meteor/check';
+import {Mongo} from "meteor/mongo";
+import {check} from "meteor/check";
 
 export const Tasks = new Mongo.Collection('tasks');
 
@@ -77,7 +77,10 @@ Tasks.attachSchema(new SimpleSchema({
             return new Date();
         },
     },
-
+    completed: {
+        type: Boolean,
+        defaultValue: false,
+    }
 }));
 
 
@@ -92,5 +95,17 @@ Meteor.methods({
         }
 
         Tasks.remove(taskId);
+    },
+    'tasks.setCompleted'(taskId, setCompleted) {
+        check(taskId, String);
+        check(setCompleted, Boolean);
+
+        const task = Tasks.findOne(taskId);
+        if (task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can check it off
+            throw new Meteor.Error('not-authorized');
+        }
+
+        Tasks.update(taskId, { $set: { completed: setCompleted } });
     },
 });
