@@ -13,7 +13,7 @@ main {
 
 svg {
     width: auto;
-    height: 65vh;
+    height: 80vh;
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
